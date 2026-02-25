@@ -1,0 +1,63 @@
+{# Formulari reutilitzable per a productes. Usat a new.html.twig i edit.html.twig #}
+{# Paràmetres: form, button_label, cancel_url #}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    {# Camp títol #}
+    <div class="mb-3">
+        {{ form_label(form.title, 'Títol del producte', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+        {{ form_widget(form.title, {'attr': {'class': 'form-control' ~ (form.title.vars.errors|length > 0 ? ' is-invalid' : ''), 'placeholder': 'Ex: Bicicleta de muntanya Trek'}}) }}
+        {% if form.title.vars.errors|length > 0 %}
+            <div class="invalid-feedback">
+                {% for error in form.title.vars.errors %}{{ error.message }}{% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    {# Camp descripció #}
+    <div class="mb-3">
+        {{ form_label(form.description, 'Descripció', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control' ~ (form.description.vars.errors|length > 0 ? ' is-invalid' : ''), 'rows': 4, 'placeholder': 'Descriu el teu producte...'}}) }}
+        {% if form.description.vars.errors|length > 0 %}
+            <div class="invalid-feedback">
+                {% for error in form.description.vars.errors %}{{ error.message }}{% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    {# Camp preu amb símbol € #}
+    <div class="mb-3">
+        {{ form_label(form.price, 'Preu (€)', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+        <div class="input-group">
+            <span class="input-group-text">€</span>
+            {{ form_widget(form.price, {'attr': {'class': 'form-control' ~ (form.price.vars.errors|length > 0 ? ' is-invalid' : ''), 'placeholder': '0.00'}}) }}
+            {% if form.price.vars.errors|length > 0 %}
+                <div class="invalid-feedback">
+                    {% for error in form.price.vars.errors %}{{ error.message }}{% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {# Camp imatge opcional #}
+    <div class="mb-4">
+        {{ form_label(form.image, 'URL de la imatge (opcional)', {'label_attr': {'class': 'form-label fw-bold'}}) }}
+        {{ form_widget(form.image, {'attr': {'class': 'form-control' ~ (form.image.vars.errors|length > 0 ? ' is-invalid' : ''), 'placeholder': 'https://exemple.com/imatge.jpg'}}) }}
+        <div class="form-text">Si no poses cap imatge, s'assignarà una automàticament.</div>
+        {% if form.image.vars.errors|length > 0 %}
+            <div class="invalid-feedback">
+                {% for error in form.image.vars.errors %}{{ error.message }}{% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    {# Botons submit i cancel·lar #}
+    <div class="d-flex gap-3">
+        <button type="submit" class="btn btn-primary flex-fill">
+            <i class="bi bi-check-circle me-2"></i>{{ button_label|default('Guardar') }}
+        </button>
+        <a href="{{ cancel_url }}" class="btn btn-outline-secondary flex-fill">
+            <i class="bi bi-x-circle me-2"></i>Cancel·lar
+        </a>
+    </div>
+
+{{ form_end(form) }}

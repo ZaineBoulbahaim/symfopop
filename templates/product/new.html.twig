@@ -1,0 +1,25 @@
+{# Vista per crear un nou producte. Reutilitza _product_form.html.twig #}
+{% extends 'base.html.twig' %}
+{% block title %}Nou producte{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="text-center mb-4">
+                <i class="bi bi-plus-circle display-4" style="color: var(--primary)"></i>
+                <h2 class="fw-bold mt-2">Publicar nou producte</h2>
+                <p class="text-muted">Omple el formulari per publicar el teu producte</p>
+            </div>
+            <div class="card shadow-sm border-0 p-4">
+                {# Reutilitza el formulari comú passant paràmetres específics #}
+                {% include '_partials/_product_form.html.twig' with {
+                    'form': form,
+                    'button_label': 'Publicar producte',
+                    'cancel_url': path('app_product_index')
+                } %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

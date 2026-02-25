@@ -1,0 +1,47 @@
+{# Vista reutilitzable per al llistat. Paràmetres: title, show_actions, show_new_button, empty_message #}
+{% extends 'base.html.twig' %}
+{% block title %}{{ title|default('Productes') }}{% endblock %}
+
+{% block body %}
+<div class="hero-section">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="fw-bold mb-1"><i class="bi bi-grid me-2"></i>{{ title|default('Tots els productes') }}</h1>
+                <p class="mb-0 opacity-75">{{ products|length }} producte(s) disponible(s)</p>
+            </div>
+            {# Botó nou producte: només si show_new_button=true #}
+            {% if show_new_button|default(false) %}
+                <a href="{{ path('app_product_new') }}" class="btn btn-light btn-lg">
+                    <i class="bi bi-plus-circle me-2"></i>Nou producte
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    {% if products is empty %}
+        {# Missatge buit personalitzable #}
+        <div class="text-center py-5">
+            <i class="bi bi-box-seam display-1 text-muted"></i>
+            <h3 class="mt-3 text-muted">{{ empty_message|default('No hi ha productes disponibles') }}</h3>
+            {% if show_new_button|default(false) %}
+                <a href="{{ path('app_product_new') }}" class="btn btn-primary mt-3">
+                    <i class="bi bi-plus-circle me-2"></i>Publicar primer producte
+                </a>
+            {% endif %}
+        </div>
+    {% else %}
+        {# Grid de productes: inclou la card reutilitzable per cada producte #}
+        <div class="row">
+            {% for product in products %}
+                {% include '_partials/_product_card.html.twig' with {
+                    'product': product,
+                    'show_actions': show_actions|default(false)
+                } %}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

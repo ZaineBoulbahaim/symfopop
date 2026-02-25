@@ -1,0 +1,58 @@
+{# Card reutilitzable per a un producte. Paràmetres: product, show_actions #}
+<div class="col-sm-6 col-lg-4 mb-4">
+    {# Tota la card és clicable gràcies a l'anchor estirat amb CSS #}
+    <div class="card product-card h-100 position-relative">
+        <img src="{{ product.image is not empty ? product.image : 'https://picsum.photos/seed/' ~ product.id ~ '/800/600' }}"
+             class="card-img-top" alt="{{ product.title }}" loading="lazy">
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-bold">{{ product.title }}</h5>
+
+            {# Descripció truncada a 100 caràcters #}
+            <p class="card-text text-muted flex-grow-1">
+                {{ product.description|length > 100
+                    ? product.description|slice(0, 100) ~ '...'
+                    : product.description }}
+            </p>
+
+            {# Autor i data #}
+            <div class="d-flex justify-content-between align-items-center mb-2 small text-muted">
+                <span><i class="bi bi-person me-1"></i>{{ product.owner.name }}</span>
+                <span><i class="bi bi-calendar me-1"></i>{{ product.createdAt|date('d/m/Y') }}</span>
+            </div>
+
+            {# Preu #}
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <span class="price-badge">{{ product.price|number_format(2, ',', '.') }} €</span>
+                {# Indicador visual que tota la card és clicable #}
+                <span class="small view-detail-hint">
+                    <i class="bi bi-eye me-1"></i>Veure detall
+                </span>
+            </div>
+
+            {# Botons editar/esborrar: posats en z-index superior per ser clicables per sobre del link #}
+            {% if show_actions is defined and show_actions and app.user and app.user == product.owner %}
+                <div class="d-flex gap-2 mt-2 position-relative" style="z-index: 2">
+                    <a href="{{ path('app_product_edit', {id: product.id}) }}" class="btn btn-warning btn-sm flex-fill">
+                        <i class="bi bi-pencil me-1"></i>Editar
+                    </a>
+                    {# Esborrat amb confirmació JS i token CSRF #}
+                    <form action="{{ path('app_product_delete', {id: product.id}) }}" method="post" class="flex-fill"
+                          onsubmit="return confirm('Segur que vols esborrar aquest producte?')">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+                        <button type="submit" class="btn btn-danger btn-sm w-100">
+                            <i class="bi bi-trash me-1"></i>Esborrar
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+
+        {# Link estirat a tota la card amb CSS (z-index 1 per no tapar els botons d'acció) #}
+        <a href="{{ path('app_product_show', {id: product.id}) }}"
+           class="stretched-link"
+           style="z-index: 1"
+           aria-label="Veure {{ product.title }}">
+        </a>
+    </div>
+</div>

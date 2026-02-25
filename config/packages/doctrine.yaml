@@ -1,0 +1,22 @@
+doctrine:
+    dbal:
+        # Driver explícit per a MariaDB amb XAMPP
+        driver: pdo_mysql
+        host: 127.0.0.1
+        port: 3306
+        dbname: symfopop
+        user: root
+        password: ~
+        charset: utf8mb4
+        server_version: 'mariadb-10.4.32'
+
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App

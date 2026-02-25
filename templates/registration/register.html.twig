@@ -1,0 +1,92 @@
+{# Vista reutilitzable per a registre i edició de perfil #}
+{# Paràmetres opcionals: is_edit, title, subtitle, button #}
+{% extends 'base.html.twig' %}
+{% block title %}{{ title|default('Crear compte') }}{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            {# Capçalera: icona diferent segons si és registre o edició #}
+            <div class="text-center mb-4">
+                {% if is_edit|default(false) %}
+                    <i class="bi bi-person-gear display-4" style="color: var(--primary)"></i>
+                {% else %}
+                    <i class="bi bi-person-plus display-4" style="color: var(--primary)"></i>
+                {% endif %}
+                <h2 class="fw-bold mt-2">{{ title|default('Crear compte') }}</h2>
+                <p class="text-muted">{{ subtitle|default('Uneix-te a la comunitat SymfoPop') }}</p>
+            </div>
+
+            <div class="card shadow-sm border-0 p-4">
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                    {# Camp nom #}
+                    <div class="mb-3">
+                        {{ form_label(form.name, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(form.name, {'attr': {
+                            'class': 'form-control' ~ (form.name.vars.errors|length > 0 ? ' is-invalid' : ''),
+                            'placeholder': 'El teu nom complet'
+                        }}) }}
+                        {% if form.name.vars.errors|length > 0 %}
+                            <div class="invalid-feedback">
+                                {% for error in form.name.vars.errors %}{{ error.message }}{% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {# Camp email #}
+                    <div class="mb-3">
+                        {{ form_label(form.email, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(form.email, {'attr': {
+                            'class': 'form-control' ~ (form.email.vars.errors|length > 0 ? ' is-invalid' : ''),
+                            'placeholder': 'correu@exemple.com'
+                        }}) }}
+                        {% if form.email.vars.errors|length > 0 %}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.vars.errors %}{{ error.message }}{% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {# Camp contrasenya amb confirmació #}
+                    <div class="mb-3">
+                        {{ form_label(form.plainPassword.first, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(form.plainPassword.first, {'attr': {
+                            'class': 'form-control' ~ (form.plainPassword.vars.errors|length > 0 ? ' is-invalid' : ''),
+                            'placeholder': '••••••••'
+                        }}) }}
+                    </div>
+                    <div class="mb-4">
+                        {{ form_label(form.plainPassword.second, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                        {{ form_widget(form.plainPassword.second, {'attr': {
+                            'class': 'form-control' ~ (form.plainPassword.vars.errors|length > 0 ? ' is-invalid' : ''),
+                            'placeholder': '••••••••'
+                        }}) }}
+                        {# Errors de contrasenya #}
+                        {% if form.plainPassword.vars.errors|length > 0 %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.plainPassword.vars.errors %}{{ error.message }}{% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {# Botó submit #}
+                    <button type="submit" class="btn btn-primary w-100 mb-3">
+                        <i class="bi bi-check-circle me-2"></i>{{ button|default('Crear compte') }}
+                    </button>
+
+                    {# Enllaç al login: només en registre, no en edició #}
+                    {% if not is_edit|default(false) %}
+                        <p class="text-center text-muted mb-0">
+                            Ja tens compte?
+                            <a href="{{ path('app_login') }}" style="color: var(--primary)">Inicia sessió aquí</a>
+                        </p>
+                    {% endif %}
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{# Fragment reutilitzable per mostrar missatges flash #}
+{% for type, messages in app.flashes %}
+    {% for message in messages %}
+        {# Mapegem 'error' a 'danger' per compatibilitat amb Bootstrap #}
+        {% set alertType = type == 'error' ? 'danger' : type %}
+        <div class="alert alert-{{ alertType }} alert-dismissible fade show" role="alert">
+            {# Icona segons el tipus de missatge #}
+            {% if type == 'success' %}<i class="bi bi-check-circle-fill me-2"></i>
+            {% elseif type == 'error' %}<i class="bi bi-x-circle-fill me-2"></i>
+            {% elseif type == 'warning' %}<i class="bi bi-exclamation-triangle-fill me-2"></i>
+            {% else %}<i class="bi bi-info-circle-fill me-2"></i>
+            {% endif %}
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    {% endfor %}
+{% endfor %}
