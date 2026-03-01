@@ -1,0 +1,40 @@
+{# Pàgina d'error 404 - Pàgina no trobada #}
+{# Symfony busca automàticament aquest fitxer quan es produeix un error 404 #}
+{% extends 'base.html.twig' %}
+
+{% block title %}404 - Pàgina no trobada{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+
+            {# Número d'error gran #}
+            <div style="font-size: 8rem; font-weight: 900; color: var(--primary); line-height: 1;">
+                404
+            </div>
+
+            {# Icona #}
+            <i class="bi bi-search display-1 text-muted mb-4 d-block"></i>
+
+            {# Missatge principal #}
+            <h2 class="fw-bold mb-3">Aquesta pàgina no existeix</h2>
+            <p class="text-muted fs-5 mb-5">
+                El producte o la pàgina que busques no s'ha trobat.<br>
+                Pot ser que hagi estat eliminat o que l'URL sigui incorrecta.
+            </p>
+
+            {# Botons d'acció #}
+            <div class="d-flex gap-3 justify-content-center">
+                <a href="{{ path('app_home') }}" class="btn btn-primary btn-lg">
+                    <i class="bi bi-house me-2"></i>Tornar a l'inici
+                </a>
+                <a href="{{ path('app_product_index') }}" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-grid me-2"></i>Veure productes
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

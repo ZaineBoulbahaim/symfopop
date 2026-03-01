@@ -1,0 +1,82 @@
+/* Variables de color corporatiu */
+:root {
+    --primary: #6c3fc5;
+    --primary-dark: #5a32a3;
+}
+
+body {
+    background-color: #f5f5f5;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+.navbar-brand span {
+    color: var(--primary);
+    font-weight: 800;
+    font-size: 1.4rem;
+}
+
+/* Botó principal */
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+/* Cards de productes amb efecte hover */
+.product-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(108,63,197,0.15);
+}
+.product-card .card-img-top {
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+    image-rendering: auto;
+}
+
+/* Badge de preu */
+.price-badge {
+    background-color: var(--primary);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+}
+
+/* Indicador "Veure detall" a les cards */
+.view-detail-hint {
+    color: var(--primary);
+    opacity: 0.6;
+    transition: opacity 0.2s ease, font-weight 0.2s ease;
+}
+.product-card:hover .view-detail-hint {
+    opacity: 1;
+    font-weight: 600;
+}
+
+/* Footer */
+footer {
+    background: white;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+/* Hero section */
+.hero-section {
+    background: linear-gradient(135deg, var(--primary) 0%, #9b59b6 100%);
+    color: white;
+    padding: 3rem 0;
+}
